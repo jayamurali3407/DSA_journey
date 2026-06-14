@@ -4,27 +4,25 @@ using namespace std;
 class Solution
 {
 public:
-    vector<int> Leaders(vector<int> &nums)
+    vector<int> leader(vector<int> &nums)
     {
         int n = nums.size();
 
         vector<int> ans;
 
-        bool leader;
-        for (int i = 0; i < n; i++)
+        int maxi = nums[n - 1];
+        ans.push_back(nums[maxi]);
+        for (int i = n - 2; i >= 0; i--)
         {
-            leader = true;
-            for (int j = i + 1; j < n; j++)
+            if (nums[i] > maxi)
             {
-                if (nums[j] > nums[i])
-                {
-                    leader = false;
-                    break;
-                }
-            }
-            if (leader == true)
+                maxi = nums[i];
                 ans.push_back(nums[i]);
+            }
         }
+
+        reverse(ans.begin(), ans.end());
+
         return ans;
     }
 };
@@ -32,16 +30,17 @@ public:
 int main()
 {
     vector<int> nums = {1, 2, 5, 3, 1, 2};
-
     Solution sol;
 
-    vector<int> ans = sol.Leaders(nums);
+    vector<int> ans = sol.leader(nums);
 
-    cout << "Leaders in an array are :";
-    for (int i = 0; i < ans.size(); i++)
+    cout << "Leaders in an Array are : ";
+
+    for (int x : ans)
     {
-        cout << ans[i] << " ";
+        cout << x << " ";
     }
     cout << endl;
+
     return 0;
 }
